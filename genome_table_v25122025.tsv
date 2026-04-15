@@ -1,0 +1,193 @@
+Phage	Genome_name	Genome_ID	Genus	Phage_cluster	Genome_size_(bp)	Morphology	Capsule	Observation	Publication(PMID)	Host_range	Halo
+Klebsiella phage SH-Kp 152410	REC_038_KL64	NC_047908	Przondovirus	0	40945	Podovirus	KL64	Halo & Plaque	33535705	Narrow	YES
+Klebsiella phage vB_KpnP_IME321	REC_042_KN1	MH587638.1	Przondovirus	0	39906	Podovirus	KN1	Halo & Plaque	30716390	Narrow	YES
+Klebsiella phage vB_KpnP_KpV71	REC_003_KL1	NC_031246.1	Drulisvirus	1	43267	Podovirus	KL1	Halo & Plaque	28988127	Narrow	YES
+Klebsiella phage vB_KpnP_KpV74	REC_007_KL13KL2	KY385423.1	Drulisvirus	1	44094	Podovirus	KL13/KL2	Halo & Plaque	28988127	Narrow	YES
+Klebsiella phage K64-1	REC_001_Kn	NC_027399.1	Alcyoneusvirus	34	346602	Jumbophage	KL1/KL11/KL21/KL25/KL30/KL69/KL35/KL64/KN4/KN5	Halo & Plaque	28077636	Broad	YES
+Klebsiella phage RAD2	REC_014_KL2	MW655991.1	Webervirus	2	49276	Siphovirus	KL2	Halo & Plaque	34431721	Narrow	YES
+Klebsiella phage P510	REC_037_KL64	MT966872.1	Przondovirus	0	39383	Podovirus	KL64	Halo & Plaque	34156584	Narrow	YES
+Klebsiella phage K5-2	REC_022_KL30KL69	KY389315.1	Przondovirus	0	41116	Podovirus	KL30/KL69	Halo & Plaque	28676686	Narrow	YES
+Klebsiella phage K5-4	REC_026_KL5KL8	KY389316.1	Przondovirus	0	40163	Podovirus	KL5/KL8	Halo & Plaque	28676686	Narrow	YES
+Klebsiella phage KP34	REC_035_KL63	NC_013649.2	Drulisvirus	1	43809	Podovirus	KL63	Halo	33230270	Narrow	YES
+Klebsiella phage KN3-1	REC_030_KL56KN3	LC413194.1	Przondovirus	0	41059	Podovirus	KL56/KN3	Halo & Plaque	30706654	Narrow	YES
+Klebsiella phage KN1-1	REC_041_KN1	LC413193.1	Przondovirus	0	40236	Podovirus	KN1	Halo & Plaque	30706654	Narrow	YES
+Klebsiella phage KN4-1	REC_044_KN4	LC413195.1	Przondovirus	0	41219	Podovirus	KN4	Halo & Plaque	30706654	Narrow	YES
+Klebsiella virus 0507KN21	REC_043_KN2	AB797215.1	Taipeivirus	23	159991	Myovirus	KN2	Halo & Plaque	23936379	Narrow	YES
+Klebsiella phage KpS8	REC_020_KL23	MT178275.1	Mydovirus	5	143800	Myovirus	KL23	Halo & Plaque	34434173	Narrow	YES
+Klebsiella phage vB_KpnP_Dlv622	REC_021_KL23	MT939252.1	Drulisvirus	1	44687	Podovirus	KL23	Halo & Plaque	34434173	Narrow	YES
+Klebsiella phage B1	REC_006_KL13KL2	MW672037.1	Webervirus	2	50040	Siphovirus	KL13/KL2	Halo & Plaque	33801047	Narrow	YES
+Klebsiella phage KP36	REC_036_KL63	NC_029099.1	Webervirus	2	49797	Siphovirus	KL63	Halo & Plaque	27916936	Unknown	YES
+Klebsiella phage KP32	REC_019_KL21KL3	NC_013647.1	Przondovirus	0	41119	Podovirus	KL3/KL21	Halo & Plaque	32386574, 30405575	Unknown	YES
+Klebsiella phage NTUH-K2044-K1-1	REC_002_KL1	NC_025418.1	Drulisvirus	1	43871	Podovirus	KL1	Halo & Plaque	35130876, 25001459	Narrow	YES
+Klebsiella phage SH-KP152226	REC_024_KL47	MK903728.1	Przondovirus	0	41420	Podovirus	KL47	Halo & Plaque	31849905	Narrow	YES
+Klebsiella phage vB_KpnP_IME205	REC_025_KL47	KU183006.1	Przondovirus	0	41310	Podovirus	KL47	Halo & Plaque	32117192	Unknown	YES
+Klebsiella phage vB_KpnM_KpV79	REC_031_KL57	MF663761.1	Sircambvirus	38	47760	Myovirus	KL57	Halo & Plaque	33113762	Unknown	YES
+Klebsiella phage vB_KpnP_KpV767	REC_032_KL57	KX712070.1	Przondovirus	0	40395	Podovirus	KL57	Halo & Plaque	33113762	Unknown	YES
+Klebsiella virus vB_KpnM-20	REC_017_KL20KL27KL7	MZ826764.1	Taipeivirus	23	158784	Myovirus	KL20/KL27/KL7	Halo & Plaque	37210493	Intermediate	YES
+Klebsiella phage vB_KpnP_ZK1	REC_004_KL1	OK625527.1	Unclassified	25	45839	Podovirus	KL1	Halo & Plaque	38551353	Narrow	YES
+Klebsiella phage GH-K3	REC_012_KL2	NC_048162.1	Webervirus	2	49427	Siphovirus	KL2		37750730	Unknown	NOT REPORTED
+Klebsiella phage VLC6	REC_008_KL13KL2	MT197176.1	Drulisvirus	1	44294	Podovirus	KL13/KL2	Halo & Plaque	38349137, 32365770	Narrow	YES
+Klebsiella phage SH-KP2492	REC_034_KL62	OR700190.1	Webervirus	2	48383	Siphovirus	KL62	Halo & Plaque	https://doi.org/10.1186/s44280-024-00038-y	Narrow	YES
+Klebsiella phage P1011	REC_027_KL5	OR492660.1	Webervirus	2	49460	Siphovirus	KL5	Halo & Plaque	38715095	Narrow	YES
+Klebsiella pneumoniae phage strain 5899STDY8049207	REC_005_KL1	OU509534.1	Drulisvirus	1	44964	Podovirus	KL1	Halo & Plaque	34222050	Narrow	YES
+Klebsiella pneumoniae phage strain 5899STDY8049228	REC_015_KL2	OU509533.1	Drulisvirus	1	43726	Podovirus	KL2	Halo & Plaque	34222050	Narrow	YES
+Klebsiella pneumoniae phage strain 5899STDY8049212	REC_028_KL51	OU509535.1	Alcyoneusvirus	34	347546	Jumbophage	KL51	Halo & Plaque	34222050	Narrow	YES
+Klebsiella phage 1611E-K2-1	REC_010_KL2	MG197810.1	Bimevirus	36	47797	Myovirus	KL2	Halo & Plaque	35386691	Unknown	YES
+Klebsiella phage SH-KP156570	REC_009_KL19	GWHBGZN01000000	Kayfunavirus	35	39997	Podovirus	KL19	Halo & Plaque	35814656	Narrow	YES
+Klebsiella phage K5	REC_018_KL21	NC_028800.1	Przondovirus	0	41698	Podovirus	KL21	Halo & Plaque	38139119	Narrow	YES
+Klebsiella phage vB_KpnP_Klyazma	REC_016_KL20	OP125547.1	Unclassified	37	50298	Podovirus	KL20	Halo & Plaque	36835449	Narrow	YES
+Klebsiella phage vB_KpnP_ZX1	REC_033_KL57	MW722080.1	Lastavirus	39	60982	Podovirus	KL57	Halo & Plaque	36145665	Unknown	YES
+Klebsiella phage KPPK108.1	REC_039_KL108	OK583892.1	Drulisvirus	1	43755	Podovirus	KL108		37330077	Unknown	NOT REPORTED
+Klebsiella phage KPPK108.2	REC_040_KL108	OK583893.1	Drulisvirus	1	43834	Podovirus	KL108		37330077	Unknown	NOT REPORTED
+Enterobacteria phage vB_KleM-RaK2	REC_029_KL54	NC_019526.1	Alcyoneusvirus	34	345809	Jumbophage	KL54		37741345	Unknown	NOT REPORTED
+Klebsiella phage P560	REC_023_KL47	MT966873.1	Przondovirus	0	40562	Podovirus	KL47	Halo & Plaque	35513275	Narrow	YES
+Klebsiella phage BMac	REC_011_KL2	OM938992.1	Webervirus	2	48957	Siphovirus	KL2	Halo & Plaque	37224021	Narrow	YES
+Klebsiella phage NPat	REC_013_KL2	OM938991.1	Webervirus	2	48715	Siphovirus	KL2	Halo & Plaque	37224021	Narrow	YES
+Klebsiella phage Henu1	LIT_041_KL1KL2KL57	MK203841.1	Przondovirus	0	40352	Podovirus	KL1/KL2/KL57	Halo & Plaque	31214784	Intermediate	YES
+Klebsiella phage vB_KpnP_KpV289	LIT_042_KL1KL2KL57	NC_028977.1	Przondovirus	0	41054	Podovirus	KL1/KL2/KL57	Halo & Plaque	https://doi.org/10.1007/s00705-015-2680-z	Unknown	YES
+Klebsiella phage vB_KppS-Samwise	LIT_045_KL3	LR881107.1	Henuseptimavirus	16	49891	Siphovirus	KL3/O1v1/KL29/KL74/O104/KL57/KL158/KL4/KL35/KL53	Halo & Plaque	33796863	Broad	YES
+Klebsiella phage vB_KvM-Eowyn	LIT_046_KL16	LR881104.1	Eowynvirus	17	265389	Jumbophage	KL110/KL16	Halo & Plaque	33796863	Narrow	YES
+Klebsiella phage vB_KpP-Screen	LIT_047_KL2	LR881105.1	Drulisvirus	1	43749	Podovirus	KL2/KL3/KL57	Halo & Plaque	33796863	Intermediate	YES
+Klebsiella phage vB_KpP-Yoda	LIT_048_KL2	LR881111.1	Drulisvirus	1	44122	Podovirus	KL2	Halo & Plaque	33796863	Narrow	YES
+Klebsiella phage vB_KppS-Anoxic	LIT_049_KL3	LR881109.1	Sugarlandvirus	18	109500	Siphovirus	O1v1/KL29/O104/KL3/KL57/KL158/KL4/KL2/KL64/KL14/KL35	Plaque	33796863	Broad	NO
+Klebsiella phage vB_KppS-Jiji	LIT_050_KL3	LR881114.1	Sugarlandvirus	18	113155	Siphovirus	KL3/O1v1/KL57/KL158/KL4/KL2/KL64/KL35/KL53	Halo & Plaque	33796863	Broad	YES
+Klebsiella phage vB_KppS-Ponyo	LIT_051_KL3	LR881115.1	Sugarlandvirus	18	109014	Siphovirus	KL3/O1v1/KL57/KL158/KL4/KL2/KL53	Plaque	33796863	Broad	NO
+Klebsiella phage vB_KppS-Storm	LIT_052_KL3	LR881112.1	Sugarlandvirus	18	110834	Siphovirus	O1v1/KL29/KL74/O104/KL57/KL158/KL4/KL35/KL53/KL3/KL57/KL158/KL4/KL2/KL14/KL35	Halo & Plaque	33796863	Broad	YES
+Klebsiella phage vB_KppS-Totoro	LIT_053_KL3	LR881113.1	Sugarlandvirus	18	109014	Siphovirus	O1v1/O104/KL3/KL57/KL158/KL4/KL14/KL35/KL53	Plaque	33796863	Broad	NO
+Klebsiella phage vB_KpM-KalD	LIT_054_KL14	LR881140.1	Slopekvirus	15	174351	Myovirus	O1v1/KL29/O104/KL28/KL38/KL3/KL57/KL158/KL4/KL2/KL64/KL14/KL53	Plaque	33796863	Broad	NO
+Klebsiella phage vB_KpM-Mild	LIT_055_KL14	LR881147.1	Slopekvirus	15	176856	Myovirus	O1v1/KL29/O104/KL28/KL38/KL3/KL57/KL158/KL4/KL2/KL14/KL53	Plaque	33796863	Broad	NO
+Klebsiella phage vB_KpM-SoFaint	LIT_056_KL38	LR881141.1	Slopekvirus	15	175933	Myovirus	KL38/O104/KL3/KL57/KL64/KL53	Plaque	33796863	Broad	NO
+Klebsiella phage vB_KoM-Flushed	LIT_057_KL28	LR881144.1	Jiaodavirus	19	168773	Myovirus	O1v1/KL29/O104/KL28/KL144/KL38/KL3/KL57/KL4/KL2/KL64/KL14/KL16/KL53	Plaque	33796863	Broad	NO
+Klebsiella phage vB_KpM-Wobble	LIT_058_KL28	LR881146.1	Jiaodavirus	19	168530	Myovirus	O1v1/KL29/O104/KL28/KL144/KL38/KL3/KL57/KL2/KL14/KL16/KL35/KL53	Halo & Plaque	33796863	Broad	YES
+Klebsiella phage SRD2021	LIT_031_KL47	MZ208805.1	Drulisvirus	1	45212	Podovirus	KL47	Plaque	34438943	Unknown	NOT REPORTED
+Klebsiella phage VLC1	LIT_033_KL22	MN794000.1	Drulisvirus	1	43411	Podovirus	KL22	Halo & Plaque	31936552	Narrow	YES
+Klebsiella phage VLC4	LIT_034_KL22	MN794003.1	Drulisvirus	1	44656	Podovirus	KL22	Halo & Plaque	31936552	Narrow	YES
+Klebsiella phage VLC2	LIT_038_KL22	MN794001.1	Drulisvirus	1	43784	Podovirus	KL22	Halo & Plaque	31936552	Narrow	YES
+Klebsiella phage VLC3	LIT_039_KL22	MN794002.1	Drulisvirus	1	43351	Podovirus	KL22	Halo & Plaque	31936552	Narrow	YES
+Klebsiella phage VLC5	LIT_040_KL22	MT197175.1	Drulisvirus	1	44932	Podovirus	KL22	Halo & Plaque	32365770	Narrow	YES
+Klebsiella phage vB_KpnP_IME337	LIT_044_KN2	MN176573.1	Drulisvirus	1	44266	Podovirus	KN2	Plaque	31912220	Narrow	NOT REPORTED
+Klebsiella phage VLCpiA1a	LIT_001_KL151	ON602732	Drulisvirus	1	43524	Podovirus	KL151	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiA1c	LIT_002_KL1	ON602748	Drulisvirus	1	42923	Podovirus	KL1	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiA1d	LIT_003_KL20	ON602762	Drulisvirus	1	42774	Podovirus	KL20	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiA1g	LIT_004_KL16	ON602761	Drulisvirus	1	44132	Podovirus	KL16	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiA1h	LIT_005_KL2KL13	ON602743	Drulisvirus	1	43535	Podovirus	KL2/KL13	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiA1i	LIT_006_KL126	ON602767	Drulisvirus	1	43855	Podovirus	KL126	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiA1j	LIT_007_KL61KL126	ON602754	Drulisvirus	1	44163	Podovirus	KL61/KL126	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiA1k	LIT_008_KL22KL37	ON602739	Drulisvirus	1	43278	Podovirus	KL22/KL37	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiA1l	LIT_009_KL22KL37	ON602740	Drulisvirus	1	43408	Podovirus	KL22/KL37	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiA1m	LIT_010_KL22KL37	ON602727	Drulisvirus	1	43756	Podovirus	KL22/KL37	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiA1o	LIT_011_KL22KL37	ON602724	Drulisvirus	1	42793	Podovirus	KL22/KL37	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiA1q	LIT_012_KL22KL37	ON602726	Drulisvirus	1	44945	Podovirus	KL22/KL37	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiA1r	LIT_013_KL22KL37	ON602725	Drulisvirus	1	43546	Podovirus	KL22/KL37	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiA3b	LIT_014_KL30	ON602742	Przondovirus	0	40231	Podovirus	KL30	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiA3c	LIT_015_KL61	ON602755	Przondovirus	0	40260	Podovirus	KL61	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiA3d	LIT_016_KL61	ON602753	Przondovirus	0	40499	Podovirus	KL61	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiD7b	LIT_017_KL140	ON602750	Webervirus	2	49577	Siphovirus	KL140	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiD7c	LIT_018_KL28	ON602735	Webervirus	2	49322	Siphovirus	KL28	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiM12a	LIT_019_KL139	ON602758	Mascletvirus	4	48833	Myovirus	KL139	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiM5a	LIT_020_KL103KL55	ON602736	Mydovirus	5	141724	Myovirus	KL103/KL55	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiM5b	LIT_021_KL22KL37	ON602729	Mydovirus	5	144995	Myovirus	KL22/KL37	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiP4a	LIT_022_KL140	ON602749	Kaypoctavirus	6	72708	Podovirus	KL140	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiP4b	LIT_023_KL140	ON602751	Kaypoctavirus	6	73290	Podovirus	KL140	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiS10a	LIT_024_KL25	ON602746	Carvajevirus	7	60119	Siphovirus	KL25	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiS11a	LIT_025_KL25	ON602745	Unclassified	8	39791	Siphovirus	KL25	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiS13a	LIT_026_KL102KL149	ON602738	Unclassified	9	47956	Siphovirus	KL102/KL149	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiS13b	LIT_027_KL63	ON602744	Unclassified	10	48190	Siphovirus	KL63	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiS13c	LIT_028_KL102KL149	ON602737	Unclassified	11	47997	Siphovirus	KL102/KL149	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiS13d	LIT_029_KL14	ON602760	Unclassified	12	46281	Siphovirus	KL14	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage VLCpiS13e	LIT_030_KL136	ON602759	Unclassified	13	47720	Siphovirus	KL136	Halo & Plaque	36753420	Narrow	YES
+Klebsiella phage 13	LIT_035_KL24	MK170446.1	Webervirus	2	43094	Siphovirus	KL24	Halo & Plaque	32246126	Narrow	YES
+Klebsiella phage P-KP2	LIT_043_KL47	MT157285.1	Slopekvirus	15	172138	Myovirus	KL47	Plaque	33968007	Unknown	NOT REPORTED
+Klebsiella phage K1-ULIP33	LIT_032_KL1	MK380014.1	Unclassified	14	44122	Podovirus	KL1	Halo & Plaque	31058805	Narrow	YES
+Klebsiella phage Kund-ULIP47	LIT_036_KL106	MK380015.1	Przondovirus	0	41397	Podovirus	KL106	Halo & Plaque	31058805	Narrow	YES
+Klebsiella phage Kund-ULIP54	LIT_037_KL106	MK380016.1	Przondovirus	0	41109	Podovirus	KL106	Halo & Plaque	31058805	Narrow	YES
+vB_Kpl_K59PH2	LIT_059_KL30KL36KL59	OY757063.1	Unclassified	20	43207	Podovirus	KL30/KL36/KL59	Plaque	39194291	Intermediate	NOT REPORTED
+vB_Kpn_K24PH164C1	LIT_060_KL24	OY757092.1	Drulisvirus	1	44457	Podovirus	KL24	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K25PH129C1	LIT_061_KL25	OY978775.1	Drulisvirus	1	44179	Podovirus	KL25	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpl_K71PH129C1	LIT_062_KL71	OY978777.1	Drulisvirus	1	43413	Podovirus	KL71	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K1PH164C1	LIT_063_KL1	OY979411.1	Drulisvirus	1	44296	Podovirus	KL1	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpl_K39PH122C2	LIT_064_KL36KL39	OY978782.1	Drulisvirus	1	44512	Podovirus	KL36/KL39	Plaque	39194291	Narrow	NOT REPORTED
+vB_Ko_K66PH128C1	LIT_065_KL66	OY757062.1	Drulisvirus	1	43831	Podovirus	KL66	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpl_K72PH164C2	LIT_066_KL72	OY757088.1	Drulisvirus	1	42982	Podovirus	KL72	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K40PH129C1	LIT_067_KL40	OY757065.1	Drulisvirus	1	44107	Podovirus	KL40	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K15PH90	LIT_068_KL15	OY979410.1	Drulisvirus	1	44292	Podovirus	KL15	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K51PH129C1	LIT_069_KL51	OY978783.1	Drulisvirus	1	44354	Podovirus	KL51	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K17alpha62	LIT_070_KL17KL62	OY979417.1	Efbeekayvirus	21	76373	Podovirus	KL17/KL62	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K60PH164C1	LIT_071_KL18KL60	OY978778.1	Kaypoctavirus	6	73567	Podovirus	KL18/KL60	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kte_K65PH164	LIT_072_Kn	OY979421.1	Jiaodavirus	19	166556	Myovirus	KL7/KL27/KL29/KL32/KL35/KL36/KL50/KL59/KL62/KL65/KL69/KL70/KL72/KL79/KL80	Plaque	39194291	Broad	NOT REPORTED
+vB_Kpn_K23PH08C2	LIT_073_KL23KL54KL58	OY757067.1	Mydovirus	5	145314	Myovirus	KL23/KL54/KL58	Plaque	39194291	Intermediate	NOT REPORTED
+vB_Kpl_K54lambda1.1.1	LIT_074_KL24KL54KL58	OY979426.1	Mydovirus	5	143446	Myovirus	KL24/KL54/KL58	Plaque	39194291	Intermediate	NOT REPORTED
+vB_Kpn_K18PH07C1	LIT_075_KL18	OY978784.1	Mydovirus	5	150020	Myovirus	KL18	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K45PH128C2	LIT_076_KL45KL71	OY978796.1	Mydovirus	5	145501	Myovirus	KL45/KL71	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K9PH25C2	LIT_077_KL9	OY979394.1	Unclassified	22	60209	Podovirus	KL9	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpl_K35PH164C3	LIT_078_KL30KL35KL36	OY978870.1	Przondovirus	0	40161	Podovirus	KL30/KL35/KL36	Plaque	39194291	Intermediate	NOT REPORTED
+vB_Ko_K74PH129C2	LIT_079_KL74	OY978822.1	Przondovirus	0	41921	Podovirus	KL74	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K11PH164C1	LIT_080_KL11KL57	OY978791.1	Przondovirus	0	40824	Podovirus	KL11/KL57	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpl_K58PH129C2	LIT_081_KL58	OY979393.1	Przondovirus	0	39315	Podovirus	KL58	Plaque	39194291	Narrow	NOT REPORTED
+vB_Ko_K26PH128C1	LIT_082_KL26KL74	OY978813.1	Przondovirus	0	41030	Podovirus	KL26/KL74	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K43PH164C1	LIT_083_KL36KL43	OY979391.1	Przondovirus	0	38774	Podovirus	KL36/KL43	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K16PH164C3	LIT_084_KL16	OY979392.1	Przondovirus	0	39283	Podovirus	KL16	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpl_K56PH164C1	LIT_085_KL56	OY977469.1	Przondovirus	0	41189	Podovirus	KL56	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpl_K48PH164C1	LIT_086_KL48	OY976571.1	Przondovirus	0	41205	Podovirus	KL48	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K82P1	LIT_087_KL82	OY979413.1	Przondovirus	0	40862	Podovirus	KL82	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K37PH164C1	LIT_088_KL2KL37	OY978834.1	Przondovirus	0	40674	Podovirus	KL2/KL37	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K42PH8	LIT_089_KL36KL42	OY979396.1	Przondovirus	0	40228	Podovirus	KL36/KL42	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K27PH129C1	LIT_090_KL27	OY978798.1	Przondovirus	0	40288	Podovirus	KL27	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpl_K8PH128	LIT_091_KL1KL8	OY976565.1	Przondovirus	0	40663	Podovirus	KL1/KL8	Plaque	39194291	Narrow	NOT REPORTED
+vB_Ko_K41P2	LIT_092_KL39KL41	OY979424.1	Slopekvirus	15	176687	Myovirus	KL39/KL41	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K30lambda2.2	LIT_093_Kn	OY978897.1	Sugarlandvirus	18	112044	Siphovirus	KL7/KL11/KL13/KL14/KL21/KL26/KL29/KL30/KL31/KL32/KL35/KL36/KL47/KL56/KL64/KL65/KL67/KL68	Plaque	39194291	Broad	NOT REPORTED
+vB_Kpn_K7PH164C4	LIT_094_Kn	OY979402.1	Sugarlandvirus	18	113206	Siphovirus	KL7/KL21/KL27/KL29/KL30/KL31/KL35/KL36/KL39/KL52/KL56/KL64/KL65/KL69/KL70	Plaque	39194291	Broad	NOT REPORTED
+vB_Kpl_K32PH164C1	LIT_095_KL32KL56	OY979429.1	Sugarlandvirus	18	110740	Siphovirus	KL32/KL56	Plaque	39194291	Narrow	NOT REPORTED
+vB_Ko_K5lambda5	LIT_096_KL5	OY978873.1	Taipeivirus	23	160719	Myovirus	KL5	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K19PH14C4P1	LIT_097_Kn	OY979415.1	Teetrevirus	24	38933	Podovirus	KL11/KL19/KL28/KL69	Plaque	39194291	Intermediate	NOT REPORTED
+vB_Kpn_K61PH164C1	LIT_098_KL61KL67	OY979414.1	Unclassified	25	46169	Podovirus	KL61/KL67	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpl_K44PH129C1	LIT_099_KL37KL44	OY978837.1	Unclassified	14	43937	Podovirus	KL37/KL44	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K13PH07C1S	LIT_100_KL13	OY979399.1	Unclassified	25	46402	Podovirus	KL13	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K13PH07C1L	LIT_101_KL13	OY978857.1	Unclassified	25	46402	Podovirus	KL13	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K22PH164C1	LIT_102_KL22KL37	OY979398.1	Unclassified	25	45253	Podovirus	KL22/KL37	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K69PH164C2	LIT_103_KL28KL69	OY979418.1	Webervirus	2	48918	Siphovirus	KL28/KL69	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K2PH164C2	LIT_104_KL2	OY978856.1	Webervirus	2	49492	Siphovirus	KL2	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K63PH128	LIT_105_KL63	OY979400.1	Webervirus	2	51393	Siphovirus	KL63	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K38PH09C2	LIT_106_KL38	OY978792.1	Webervirus	2	50215	Siphovirus	KL38	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K64PH164C4	LIT_107_KL64	OY979481.1	Webervirus	2	48074	Siphovirus	KL64	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K33PH14C2	LIT_108_KL11KL28KL33	OY978840.1	Webervirus	2	51764	Siphovirus	KL11/KL28/KL33	Plaque	39194291	Intermediate	NOT REPORTED
+vB_Kpn_K2alpha62	LIT_109_KL2	OY978817.1	Webervirus	2	49345	Siphovirus	KL2	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K6PH25C3	LIT_110_KL6KL7	OY979480.1	Webervirus	2	50947	Siphovirus	KL6/KL7	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K2PH164C1	LIT_111_KL2	OY979420.1	Webervirus	2	48876	Siphovirus	KL2	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpl_K53PH164C2	LIT_112_KL53	OY979469.1	Webervirus	2	49657	Siphovirus	KL53	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K46PH129	LIT_113_KL46	OY978805.1	Webervirus	2	49453	Siphovirus	KL46	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K54lambda2	LIT_114_KL54	OY979435.1	Webervirus	2	48532	Siphovirus	KL54	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K52PH129C1	LIT_115_Kn	OY978799.1	Webervirus	2	49703	Siphovirus	KL28/KL39/KL52/KL62/KL69	Plaque	39194291	Broad	NOT REPORTED
+vB_Kpn_K31PH164	LIT_116_KL31KL37	OY977470.1	Webervirus	2	51681	Siphovirus	KL31/KL37	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K2064PH2	LIT_117_Kn	OY978823.1	Webervirus	2	49637	Siphovirus	KL11/KL14/KL20/KL27/KL28/KL33/KL35/KL60/KL62/KL63/KL64/KL69/KL70/KL74	Plaque	39194291	Broad	NOT REPORTED
+vB_Kpl_K14PH164C1	LIT_118_KL14	OY979433.1	Webervirus	2	49112	Siphovirus	KL14	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K2069PH1	LIT_119_Kn	OY757093.1	Webervirus	2	49869	Siphovirus	KL20/KL27/KL28/KL33/KL35/KL62/KL64/KL69/KL70	Plaque	39194291	Broad	NOT REPORTED
+vB_Kpn_K28PH129	LIT_120_KL28KL69	OY757089.1	Webervirus	2	49618	Siphovirus	KL28/KL69	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K62PH164C2	LIT_121_KL29KL62KL79	OY757064.1	Unclassified	26	53240	Siphovirus	KL29/KL62/KL79	Plaque	39194291	Intermediate	NOT REPORTED
+vB_Ko_K29PH164C1	LIT_122_Kn	OY757094.1	Unclassified	26	52798	Siphovirus	KL24/KL29/KL62/KL69/KL79	Plaque	39194291	Broad	NOT REPORTED
+vB_Kpn_K50PH164C1	LIT_123_KL43KL50KL69	OY978835.1	Unclassified	27	49063	Siphovirus	KL43/KL50/KL69	Plaque	39194291	Intermediate	NOT REPORTED
+vB_Kpl_K49PH164C2	LIT_124_Kn	OY979434.1	Unclassified	28	49012	Siphovirus	KL11/KL49/KL53/KL56/KL60	Plaque	39194291	Broad	NOT REPORTED
+vB_Ko_K70PH128C1	LIT_125_Kn	OY757066.1	Unclassified	29	47512	Siphovirus	KL11/KL19/KL29/KL49/KL69/KL70	Plaque	39194291	Broad	NOT REPORTED
+vB_Kpn_K21lambda1	LIT_126_KL21	OY978848.1	Unclassified	30	47505	Siphovirus	KL21	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K34PH164	LIT_127_Kn	OY979427.1	Unclassified	28	48433	Siphovirus	KL11/KL34/KL49/KL60/KL64/KL68/KL69	Plaque	39194291	Broad	NOT REPORTED
+vB_Kpn_K10PH82C1	LIT_128_KL10	OY757061.1	Unclassified	31	40906	Podovirus	KL10	Plaque	39194291	Narrow	NOT REPORTED
+vB_Ko_K4PH164	LIT_129_KL4KL52	OY979482.1	Unclassified	32	57640	Siphovirus	KL4/KL52	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K17alpha61	LIT_130_KL17	OY757091.1	Webervirus	2	48557	Siphovirus	KL17	Plaque	39194291	Narrow	NOT REPORTED
+vB_Kpn_K12P1.1	LIT_131_KL12KL28KL69	OY978816.1	Apdecimavirus	33	39770	Podovirus	KL12/KL28/KL69	Plaque	39194291	Intermediate	NOT REPORTED
+KP7	CONT_001_KL10	KP7_1	Przondovirus	0	40280	Podovirus	KL10	Halo & Plaque	Unpublished	Narrow	YES
+KP15	CONT_002_KL10	KP15_1	Przondovirus	0	39864	Podovirus	KL10	Halo & Plaque	Unpublished	Narrow	YES
+KP21	CONT_003_KL127	KP21_2	Drulisvirus	1	43390	Podovirus	KL127	Halo & Plaque	Unpublished	Narrow	YES
+KP3	CONT_004_KL17	KP3_2	Przondovirus	0	51538	Podovirus	KL17	Halo & Plaque	Unpublished	Narrow	YES
+KP6	CONT_005_KL20	KP6_4	Przondovirus	0	40251	Podovirus	KL20	Halo & Plaque	Unpublished	Narrow	YES
+KP10	CONT_006_KL22	KP10_1	Webervirus	2	49178	Siphovirus	KL22	Halo & Plaque	Unpublished	Narrow	YES
+KP2	CONT_007_KL3	KP2_1	Webervirus	2	48884	Siphovirus	KL3	Halo & Plaque	Unpublished	Narrow	YES
+KP5	CONT_008_KL53	KP5_2	Webervirus	2	51561	Siphovirus	KL53	Halo & Plaque	Unpublished	Narrow	YES
+KP18	CONT_009_KL53	KP18_2	Webervirus	2	51607	Siphovirus	KL53	Halo & Plaque	Unpublished	Narrow	YES
+KP23	CONT_010_KL53	KP23_1	Webervirus	2	50830	Siphovirus	KL53	Halo & Plaque	Unpublished	Narrow	YES
+KP25	CONT_011_KL53	KP25_1	Webervirus	2	51607	Siphovirus	KL53	Halo & Plaque	Unpublished	Narrow	YES
+KP28	CONT_012_KL53	KP28_1	Webervirus	2	51607	Siphovirus	KL53	Halo & Plaque	Unpublished	Narrow	YES
+KP29	CONT_013_KL53	KP29_1	Webervirus	2	51207	Siphovirus	KL53	Halo & Plaque	Unpublished	Narrow	YES
+KP26	CONT_014_KL53	KP26_1	Przondovirus	0	40641	Podovirus	KL53	Halo & Plaque	Unpublished	Narrow	YES
+KP30	CONT_015_KL53	KP30_1	Webervirus	2	41427	Siphovirus	KL53	Halo & Plaque	Unpublished	Narrow	YES
+KP12	CONT_016_KL54	KP12_1	Koutsourovirus	3	43829	Podovirus	KL54	Halo & Plaque	Unpublished	Narrow	YES
+KP8	CONT_017_KL58	KP8_2	Przondovirus	0	40143	Podovirus	KL58	Halo & Plaque	Unpublished	Narrow	YES
