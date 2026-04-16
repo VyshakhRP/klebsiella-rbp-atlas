@@ -30,7 +30,7 @@ RBPs are the host-recognition modules of bacteriophages, determining which bacte
 | `ecod-map.tsv` | ECOD domain hits mapped to each RBP (query = RBP, target = ECOD domain) |
 | `genome_table_v25122025.tsv` | Phage genome metadata: taxonomy, morphology, host range, capsule, publications |
 | `ecod-color-map.txt` | Color assignments for each ECOD domain type |
-| `structures/` | AlphaFold2-predicted structures in gzip-compressed PDB format (`.pdb.gz`) |
+| `structures/` | AlphaFold3-predicted structures in gzip-compressed PDB format (`.pdb.gz`) |
 
 ### RBP filtering criteria
 Proteins included in the atlas meet all of the following:
@@ -128,7 +128,7 @@ Each ECOD domain is assigned a distinct color for consistent visualization acros
 
 ## Structure Files
 
-3D structures are AlphaFold2 predictions stored as gzip-compressed PDB files (`structures/*.pdb.gz`). The NGL viewer loads and decompresses these files on demand in the browser — no pre-processing required.
+3D structures are AlphaFold3 predictions stored as gzip-compressed PDB files (`structures/*.pdb.gz`). The NGL viewer loads and decompresses these files on demand in the browser — no pre-processing required.
 
 ---
 
@@ -142,5 +142,5 @@ If you use this atlas in your research, please cite:
 
 ## Contact
 
-Vyshakh Rajachandra Panicker  
-GitHub: [@VyshakhRP](https://github.com/VyshakhRP)
+Vyshakh Rajachandra Panicker (vyshakh.rajachandrapanicker@doctoral.uj.edu.pl) 
+
