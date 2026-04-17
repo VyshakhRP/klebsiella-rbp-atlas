@@ -20,6 +20,7 @@ ECOD_MAP     = HERE / "ecod-map.tsv"
 GENOME_TABLE = HERE / "genome_table_v25122025.tsv"
 COLOR_FILE   = HERE / "ecod-color-map.txt"
 PD_MAP       = HERE / "pseudo-domain-map.tsv"
+SM_MAP       = HERE / "sequence_modularity.tsv"
 STRUCTURES   = HERE / "structures"
 OUT          = HERE / "index.html"
 
@@ -229,6 +230,59 @@ pd_json  = json.dumps(pd_records, separators=(",",":"), ensure_ascii=False)
 pd_count = len(set(r["query"] for r in pd_records))
 print(f"Pseudo-domain clusters: {pd_count}  |  Mappings: {len(pd_records)}")
 
+# ── 9b. Sequence modularity network ────────────────────────────────────────────
+sm_df = pd.read_csv(SM_MAP, sep="\t", low_memory=False)
+sm_df["modular"] = sm_df["modular"].str.replace(
+    "Recombination hotspots", "Putative recombination hotspots", regex=False
+)
+
+class_n = {c["name"]: c["n"] for c in classes_list}
+
+from collections import Counter as _Counter
+_edge_counts = _Counter()
+for _, _row in sm_df.iterrows():
+    _qc  = str(_row["query_class"])
+    _tc  = str(_row["target_class"])
+    _cat = str(_row["modular"])
+    _edge_counts[(_qc, _tc, _cat)] += 1
+
+sm_edges = [{"s": s, "t": t, "cat": c, "n": n}
+            for (s, t, c), n in sorted(_edge_counts.items(), key=lambda x: -x[1])]
+
+sm_classes = sorted({e["s"] for e in sm_edges} | {e["t"] for e in sm_edges})
+sm_nodes   = [{"id": cls, "n": class_n.get(cls, 0)} for cls in sm_classes]
+
+sm_data  = {"nodes": sm_nodes, "edges": sm_edges}
+sm_json  = json.dumps(sm_data, separators=(",",":"), ensure_ascii=False)
+print(f"SM nodes: {len(sm_nodes)}  |  SM edges (class-level): {len(sm_edges)}")
+
+# Protein-level rows for the detail table
+sm_row_records = []
+for _, _row in sm_df.iterrows():
+    _cat = str(_row["modular"])
+    if not _cat or _cat == "nan":
+        continue
+    try:
+        sm_row_records.append({
+            "q":    str(_row["query"]),
+            "t":    str(_row["target"]),
+            "qc":   str(_row["query_class"]),
+            "tc":   str(_row["target_class"]),
+            "cat":  _cat,
+            "pid":  round(float(_row["pident"]), 1),
+            "al":   int(_row["alnlen"]),
+            "qs":   int(_row["qstart"]), "qe": int(_row["qend"]),
+            "ts":   int(_row["tstart"]), "te": int(_row["tend"]),
+            "qcov": round(float(_row["qcov"]), 3),
+            "tcov": round(float(_row["tcov"]), 3),
+            "ev":   float(_row["evalue"]),
+        })
+    except (ValueError, TypeError):
+        continue
+
+sm_rows_json = json.dumps(sm_row_records, separators=(",",":"), ensure_ascii=False)
+print(f"SM protein-level rows: {len(sm_row_records)}")
+
 # ── 10. HTML template ──────────────────────────────────────────────────────────
 HTML = r"""<!DOCTYPE html>
 <html lang="en">
@@ -251,10 +305,12 @@ body{display:flex;flex-direction:column;height:100vh;overflow:hidden;font-family
 .top-search input{width:100%;padding:6px 10px;border-radius:5px;border:none;background:#253d52;color:#e0eaf4;font-size:12px;outline:none}
 .top-search input::placeholder{color:#5a7a94}
 .top-search input:focus{background:#2d4d66;box-shadow:0 0 0 2px #4a90d9}
-#search-results{position:absolute;top:calc(100% + 3px);left:0;right:0;background:#1a2b3c;border:1px solid #2d4157;border-radius:6px;max-height:280px;overflow-y:auto;z-index:300;display:none}
-.sr-item{padding:7px 14px;cursor:pointer;border-bottom:1px solid #1e3347;transition:background .12s}
+#search-results{position:absolute;top:calc(100% + 3px);left:0;right:0;background:#1a2b3c;border:1px solid #2d4157;border-radius:6px;max-height:340px;overflow-y:auto;z-index:300;display:none}
+.sr-section{padding:5px 14px 3px;font-size:10px;font-weight:700;color:#4a90d9;text-transform:uppercase;letter-spacing:.7px;border-top:1px solid #1e3347}
+.sr-section:first-child{border-top:none}
+.sr-item{padding:6px 14px;cursor:pointer;border-bottom:1px solid #1a2f42;transition:background .12s}
 .sr-item:hover{background:#253d52}
-.sr-pid{font-family:monospace;font-size:11px;color:#9ac0f0}
+.sr-pid{font-size:11px;color:#9ac0f0;display:flex;align-items:center;gap:5px}
 .sr-cls{font-size:10px;color:#5a7a94;margin-top:1px}
 #view-label{font-size:12px;color:#7a9ab8;margin-left:auto;white-space:nowrap}
 
@@ -419,6 +475,20 @@ a.ngl-btn{text-decoration:none;display:inline-flex;align-items:center;gap:4px}
 
 /* Tooltip */
 #tooltip{position:fixed;pointer-events:none;background:rgba(15,25,40,.88);color:#e8f0f8;font-size:11px;padding:5px 9px;border-radius:5px;max-width:260px;line-height:1.5;z-index:9999;display:none}
+
+/* ── Modularity network view ── */
+#view-modularity{flex:1;overflow:hidden;display:none;flex-direction:column}
+#net-hdr{display:flex;align-items:center;gap:10px;padding:10px 22px;background:#fff;border-bottom:1px solid #e0e6ec;flex-shrink:0;flex-wrap:wrap}
+.net-legend{display:flex;flex-wrap:wrap;gap:7px;align-items:center;flex:1}
+.cat-chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:3px 9px;border-radius:10px;background:#f4f6f9;color:#444;white-space:nowrap;border:1px solid #e0e6ec}
+.cat-swatch{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+#cy-container{flex:1;min-height:0;background:#fafbfc}
+#net-table-panel{flex-shrink:0;max-height:260px;overflow-y:auto;border-top:2px solid #e0e6ec;background:#fff;padding:12px 22px;display:none}
+#net-table-panel::-webkit-scrollbar{width:5px}
+#net-table-panel::-webkit-scrollbar-thumb{background:#e0e6ec;border-radius:3px}
+.net-table{width:100%;border-collapse:collapse;font-size:11.5px}
+.net-table th{font-size:10px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.6px;border-bottom:2px solid #eef1f6;padding:4px 8px;text-align:left}
+.net-table td{padding:5px 8px;border-bottom:1px solid #f4f6f9;vertical-align:middle}
 </style>
 </head>
 <body>
@@ -427,7 +497,7 @@ a.ngl-btn{text-decoration:none;display:inline-flex;align-items:center;gap:4px}
   <span id="top-title" onclick="goHome()">Klebsiella phage RBP Atlas</span>
   <button id="btn-home" onclick="goHome()">&#8592; Home</button>
   <div class="top-search">
-    <input id="search-input" type="text" placeholder="Search protein or class…" autocomplete="off">
+    <input id="search-input" type="text" placeholder="Search protein, phage, capsule, genus, cluster…" autocomplete="off">
     <div id="search-results"></div>
   </div>
   <span id="view-label"></span>
@@ -438,7 +508,7 @@ a.ngl-btn{text-decoration:none;display:inline-flex;align-items:center;gap:4px}
   <!-- ── Home ── -->
   <div id="view-home">
     <div class="atlas-title">Klebsiella phage RBP Atlas</div>
-    <div class="atlas-sub">A structural atlas of receptor-binding proteins from <em>Klebsiella</em>-infecting bacteriophages. Explore structures, domain architectures, and pseudo-domain diversity.</div>
+    <div class="atlas-sub">A structural atlas of receptor-binding proteins from <em>Klebsiella</em>-infecting bacteriophages. Explore structures, domain architectures, pseudo-domain diversity, and sequence modularity across RBP classes.</div>
     <div class="icon-grid" id="icon-grid"></div>
     <div id="home-charts"></div>
   </div>
@@ -513,6 +583,17 @@ a.ngl-btn{text-decoration:none;display:inline-flex;align-items:center;gap:4px}
 
     </div><!-- det-body -->
   </aside>
+
+  <!-- ── Modularity network ── -->
+  <div id="view-modularity">
+    <div id="net-hdr">
+      <div class="net-legend" id="net-legend"></div>
+      <button class="hdr-btn" id="btn-net-export" onclick="exportNetRowsTSV()">&#8659; Export TSV</button>
+    </div>
+    <div id="cy-container"></div>
+    <div id="net-table-panel"></div>
+  </div>
+
 </div><!-- content -->
 
 <!-- Fullscreen NGL overlay -->
@@ -528,9 +609,20 @@ a.ngl-btn{text-decoration:none;display:inline-flex;align-items:center;gap:4px}
 
 <script src="https://cdn.jsdelivr.net/npm/ngl@0.10.4/dist/ngl.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/cytoscape@3.28.1/dist/cytoscape.min.js"></script>
 <script>
-const D  = __ATLAS_DATA__;
-const PD = __PD_DATA__;
+const D       = __ATLAS_DATA__;
+const PD      = __PD_DATA__;
+const SM      = __SM_DATA__;
+const SM_ROWS = __SM_ROWS__;
+
+const CAT_COLORS = {
+  "Cterminal variation":             "#1f77b4",
+  "Nterminal sharing":               "#ff7f0e",
+  "Putative recombination hotspots": "#2ca02c",
+  "Cterminal sharing":               "#d62728",
+  "Conserved regions":               "#9467bd"
+};
 
 // ── Lookups ────────────────────────────────────────────────────────────────────
 const classMap   = new Map(D.classes.map(c => [c.name, c]));
@@ -561,6 +653,8 @@ const S = {
   detailMode: null, activeProt: null, activePd: null,
   currentP: null,   // protein object currently in detail
   fsStage: null,    // fullscreen NGL stage
+  cy: null,         // Cytoscape instance
+  netFilter: null,  // current network table filter
 };
 
 // ── Init ──────────────────────────────────────────────────────────────────────
@@ -576,14 +670,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const classSvg = `<svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect x="6" y="8" width="40" height="9" rx="4" fill="#2d5a8e"/><rect x="6" y="22" width="28" height="9" rx="4" fill="#4a90d9"/><rect x="6" y="36" width="34" height="9" rx="4" fill="#7ab4e8"/></svg>`;
   const clusterSvg = `<svg width="52" height="52" viewBox="0 0 52 52" fill="none"><circle cx="26" cy="20" r="7" fill="#2d5a8e"/><circle cx="14" cy="36" r="5" fill="#4a90d9"/><circle cx="26" cy="36" r="5" fill="#4a90d9"/><circle cx="38" cy="36" r="5" fill="#4a90d9"/><line x1="26" y1="27" x2="14" y2="31" stroke="#b0c8e8" stroke-width="1.8"/><line x1="26" y1="27" x2="26" y2="31" stroke="#b0c8e8" stroke-width="1.8"/><line x1="26" y1="27" x2="38" y2="31" stroke="#b0c8e8" stroke-width="1.8"/></svg>`;
   const ecodSvg = `<svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect x="6" y="22" width="40" height="10" rx="3" fill="#e0e6ec"/><rect x="6" y="22" width="12" height="10" rx="3" fill="#cc0099"/><rect x="18" y="22" width="10" height="10" fill="#0047ab"/><rect x="28" y="22" width="8" height="10" fill="#e68c00"/><rect x="36" y="22" width="10" height="10" rx="3" fill="#00998c"/><path d="M26 10 L26 22 M26 32 L26 42" stroke="#bbb" stroke-width="1.5" stroke-dasharray="3,2"/></svg>`;
-  const pdSvg = `<svg width="52" height="52" viewBox="0 0 52 52" fill="none"><ellipse cx="26" cy="26" rx="20" ry="20" fill="none" stroke="#e0e6ec" stroke-width="2"/><path d="M26 6 A20 20 0 0 1 46 26" stroke="#e65100" stroke-width="5" stroke-linecap="round"/><path d="M46 26 A20 20 0 0 1 26 46" stroke="#4a90d9" stroke-width="5" stroke-linecap="round"/><path d="M26 46 A20 20 0 0 1 6 26" stroke="#2d5a8e" stroke-width="5" stroke-linecap="round"/><path d="M6 26 A20 20 0 0 1 26 6" stroke="#27ae60" stroke-width="5" stroke-linecap="round"/><circle cx="26" cy="26" r="5" fill="#1a2b3c"/></svg>`;
+  const pdSvg  = `<svg width="52" height="52" viewBox="0 0 52 52" fill="none"><ellipse cx="26" cy="26" rx="20" ry="20" fill="none" stroke="#e0e6ec" stroke-width="2"/><path d="M26 6 A20 20 0 0 1 46 26" stroke="#e65100" stroke-width="5" stroke-linecap="round"/><path d="M46 26 A20 20 0 0 1 26 46" stroke="#4a90d9" stroke-width="5" stroke-linecap="round"/><path d="M26 46 A20 20 0 0 1 6 26" stroke="#2d5a8e" stroke-width="5" stroke-linecap="round"/><path d="M6 26 A20 20 0 0 1 26 6" stroke="#27ae60" stroke-width="5" stroke-linecap="round"/><circle cx="26" cy="26" r="5" fill="#1a2b3c"/></svg>`;
+  const modSvg = `<svg width="52" height="52" viewBox="0 0 52 52" fill="none"><line x1="26" y1="26" x2="10" y2="13" stroke="#1f77b4" stroke-width="2.5"/><line x1="26" y1="26" x2="42" y2="13" stroke="#ff7f0e" stroke-width="2.5"/><line x1="26" y1="26" x2="10" y2="42" stroke="#2ca02c" stroke-width="2.5"/><line x1="26" y1="26" x2="42" y2="42" stroke="#d62728" stroke-width="2.5"/><line x1="10" y1="13" x2="42" y2="13" stroke="#9467bd" stroke-width="1.8"/><line x1="10" y1="13" x2="10" y2="42" stroke="#9467bd" stroke-width="1.8"/><circle cx="26" cy="26" r="7" fill="#1a2b3c"/><circle cx="10" cy="13" r="5" fill="#4a90d9"/><circle cx="42" cy="13" r="5" fill="#4a90d9"/><circle cx="10" cy="42" r="5" fill="#4a90d9"/><circle cx="42" cy="42" r="5" fill="#4a90d9"/></svg>`;
 
   [
-    { svg: rbpSvg,     num: total,           lbl: "RBPs",                   view: "rbp" },
+    { svg: rbpSvg,     num: total,            lbl: "RBPs",                   view: "rbp" },
     { svg: classSvg,   num: D.classes.length, lbl: "RBP Classes",            view: "classes" },
     { svg: clusterSvg, num: totalClusters,    lbl: "RBP Clusters",           view: "clusters" },
     { svg: ecodSvg,    num: ecodSet.size,     lbl: "ECOD Domains",           view: "ecod" },
     { svg: pdSvg,      num: PD_IDS.length,    lbl: "Pseudo-domain Clusters", view: "pd" },
+    { svg: modSvg,     num: SM.edges.length,  lbl: "Sequence Modularity",    view: "modularity" },
   ].forEach(d => {
     const el = document.createElement("div");
     el.className = "icon-card";
@@ -602,7 +698,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ── Donut charts ──────────────────────────────────────────────────────────────
 function buildHomeCharts() {
-  // ── ECOD donut ──
   const ecodRes = new Map();
   D.classes.forEach(c => c.clusters.forEach(cl => cl.proteins.forEach(p => {
     if (!p.pdb) return;
@@ -611,35 +706,8 @@ function buildHomeCharts() {
       ecodRes.set(t.dk, (ecodRes.get(t.dk)||0) + n);
     });
   })));
-  const ecodEntries = [...ecodRes.entries()]
-    .sort((a,b) => b[1]-a[1]);
-  const ecodTotal = ecodEntries.reduce((s,[,v])=>s+v,0);
-
-  // ── PD donut ──
-  // Total residues in structured proteins
-  let totalStructRes = 0;
-  D.classes.forEach(c => c.clusters.forEach(cl => cl.proteins.forEach(p => {
-    if (p.pdb) totalStructRes += p.tlen || p.plen;
-  })));
-  // Merge PD intervals per target to avoid double-counting
-  let pdCoveredRes = 0;
-  const pdIntervals = new Map();
-  PD.forEach(r => {
-    const p = proteinMap.get(r.target);
-    if (!p || !p.pdb) return;
-    if (!pdIntervals.has(r.target)) pdIntervals.set(r.target, []);
-    pdIntervals.get(r.target).push([r.tstart, r.tend]);
-  });
-  pdIntervals.forEach(intervals => {
-    intervals.sort((a,b)=>a[0]-b[0]);
-    let merged = [];
-    intervals.forEach(([s,e]) => {
-      if (!merged.length || s > merged[merged.length-1][1]+1) merged.push([s,e]);
-      else merged[merged.length-1][1] = Math.max(merged[merged.length-1][1], e);
-    });
-    pdCoveredRes += merged.reduce((sum,[s,e])=>sum+e-s+1,0);
-  });
-  const pdUncovered = Math.max(0, totalStructRes - pdCoveredRes);
+  const ecodEntries = [...ecodRes.entries()].sort((a,b) => b[1]-a[1]);
+  const ecodTotal   = ecodEntries.reduce((s,[,v])=>s+v,0);
 
   const wrap = document.getElementById("home-charts");
   wrap.innerHTML = `
@@ -650,17 +718,8 @@ function buildHomeCharts() {
         <canvas id="ecod-chart" width="160" height="160"></canvas>
         <div class="chart-legend" id="ecod-legend"></div>
       </div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">Pseudo-domain Coverage</div>
-      <div class="chart-sub">Fraction of structural residues covered by pseudo-domains</div>
-      <div class="donut-wrap">
-        <canvas id="pd-chart" width="160" height="160"></canvas>
-        <div class="chart-legend" id="pd-legend"></div>
-      </div>
     </div>`;
 
-  // ECOD chart
   const ecodColors = ecodEntries.map(([dk]) =>
     dk === "undetected" ? "#e8e8e8" : (D.colorMap[dk] || "#aaa"));
   const ecodLabels = ecodEntries.map(([dk]) =>
@@ -681,40 +740,36 @@ function buildHomeCharts() {
       <span class="leg-name" title="${esc(lbl)}">${esc(lbl)}</span>
       <span class="leg-pct">${pct}%</span></div>`;
   });
-
-  // PD chart
-  new Chart(document.getElementById("pd-chart"), {
-    type: "doughnut",
-    data: { labels: ["PD Covered","Uncovered"], datasets: [{ data: [pdCoveredRes, pdUncovered], backgroundColor: ["#e65100","#e8e8e8"], borderWidth: 1, borderColor: "#fff" }] },
-    options: { plugins: { legend: { display: false }, tooltip: { callbacks: {
-      label: (ctx) => ` ${ctx.label}: ${((ctx.raw/totalStructRes)*100).toFixed(1)}% (${ctx.raw.toLocaleString()} aa)`
-    }}}, cutout: "60%", animation: { duration: 600 } }
-  });
-  const pdPct = ((pdCoveredRes/totalStructRes)*100).toFixed(1);
-  const unPct = ((pdUncovered/totalStructRes)*100).toFixed(1);
-  document.getElementById("pd-legend").innerHTML = `
-    <div class="leg-row"><div class="leg-dot" style="background:#e65100"></div><span class="leg-name">PD Covered</span><span class="leg-pct">${pdPct}%</span></div>
-    <div class="leg-row"><div class="leg-dot" style="background:#e8e8e8;border:1px solid #ddd"></div><span class="leg-name">Uncovered</span><span class="leg-pct">${unPct}%</span></div>
-    <div style="margin-top:8px;font-size:10px;color:#aaa">${pdCoveredRes.toLocaleString()} / ${totalStructRes.toLocaleString()} aa<br>across ${pdIntervals.size} structures</div>`;
 }
 
 // ── View switching ─────────────────────────────────────────────────────────────
-const VIEW_LABELS = { rbp:"RBP Structures", classes:"RBP Classes", clusters:"RBP Clusters", ecod:"ECOD Domains", pd:"Pseudo-domain Clusters" };
+const VIEW_LABELS = {
+  rbp:"RBP Structures", classes:"RBP Classes", clusters:"RBP Clusters",
+  ecod:"ECOD Domains", pd:"Pseudo-domain Clusters", modularity:"Sequence Modularity"
+};
 
 function setView(name) {
-  document.getElementById("view-home").style.display     = name === "home" ? "" : "none";
-  document.getElementById("view-explorer").style.display = name !== "home" ? "flex" : "none";
+  document.getElementById("view-home").style.display       = name === "home"       ? "" : "none";
+  document.getElementById("view-explorer").style.display   = (name !== "home" && name !== "modularity") ? "flex" : "none";
+  document.getElementById("view-modularity").style.display = name === "modularity" ? "flex" : "none";
   document.getElementById("btn-home").classList.toggle("vis", name !== "home");
   document.getElementById("view-label").textContent = VIEW_LABELS[name] || "";
-  if (name !== "home") document.getElementById("view-hdr-title").textContent = VIEW_LABELS[name] || "";
+  if (name !== "home" && name !== "modularity")
+    document.getElementById("view-hdr-title").textContent = VIEW_LABELS[name] || "";
   S.view = name;
 }
 
-function goHome() { setView("home"); closeDetail(); document.getElementById("explorer-content").innerHTML = ""; }
+function goHome() {
+  setView("home");
+  closeDetail();
+  document.getElementById("explorer-content").innerHTML = "";
+  if (S.cy) { S.cy.destroy(); S.cy = null; }
+}
 
 function showView(name) {
   setView(name);
   closeDetail();
+  if (name === "modularity") { buildModularityView(); return; }
   const ec = document.getElementById("explorer-content");
   if      (name === "rbp")      ec.innerHTML = buildRbpView();
   else if (name === "classes")  ec.innerHTML = buildClassesView();
@@ -1189,24 +1244,323 @@ function setupTooltip() {
 
 // ── Search ────────────────────────────────────────────────────────────────────
 function setupSearch() {
-  const inp=document.getElementById("search-input"),res=document.getElementById("search-results");
-  inp.addEventListener("input",()=>{
-    const q=inp.value.trim().toLowerCase();
-    if(q.length<2){res.style.display="none";return;}
-    const hits=[]; for(const[id,p]of proteinMap){if(hits.length>=40)break;if(id.toLowerCase().includes(q)||(p.gm.Phage||"").toLowerCase().includes(q))hits.push(p);}
-    const ch=D.classes.filter(c=>c.name.toLowerCase().includes(q));
-    if(!hits.length&&!ch.length){res.style.display="none";return;}
-    let html="";
-    ch.slice(0,5).forEach(c=>{html+=`<div class="sr-item" onclick="jumpToClass('${esc(c.name)}');clearSearch()"><div class="sr-pid">&#128193; ${esc(c.name)}</div><div class="sr-cls">${c.n} proteins</div></div>`;});
-    hits.forEach(p=>{html+=`<div class="sr-item" onclick="jumpToProtein('${esc(p.id)}');clearSearch()"><div class="sr-pid">${esc(p.id)}</div><div class="sr-cls">${esc(classOfProtein(p.id))}</div></div>`;});
-    res.innerHTML=html;res.style.display="block";
+  const inp = document.getElementById("search-input");
+  const res = document.getElementById("search-results");
+
+  inp.addEventListener("input", () => {
+    const q = inp.value.trim().toLowerCase();
+    if (q.length < 2) { res.style.display = "none"; return; }
+
+    const sections = [];
+
+    // 1. RBP classes
+    const classHits = D.classes.filter(c => c.name.toLowerCase().includes(q));
+    if (classHits.length) sections.push({
+      label: "RBP Classes",
+      items: classHits.slice(0,5).map(c => ({
+        title: "&#128193; " + esc(c.name), sub: c.n + " proteins",
+        action: `jumpToClass('${esc(c.name)}')`
+      }))
+    });
+
+    // 2. RBP clusters
+    const clHits = [];
+    D.classes.forEach(c => c.clusters.forEach(cl => {
+      if (cl.id.toLowerCase().includes(q)) clHits.push({cl, cls: c.name});
+    }));
+    if (clHits.length) sections.push({
+      label: "RBP Clusters",
+      items: clHits.slice(0,5).map(({cl, cls}) => ({
+        title: esc(cl.id), sub: esc(cls) + " · " + cl.proteins.length + " proteins",
+        action: `jumpToCluster('${esc(cl.id)}')`
+      }))
+    });
+
+    // 3. Pseudo-domain clusters
+    const pdHits = PD_IDS.filter(id => id.toLowerCase().includes(q));
+    if (pdHits.length) sections.push({
+      label: "Pseudo-domain Clusters",
+      items: pdHits.slice(0,5).map(id => ({
+        title: esc(id), sub: (pdByQuery.get(id)||[]).length + " mappings",
+        action: `jumpToPd('${esc(id)}')`
+      }))
+    });
+
+    // 4. ECOD domains
+    const ecodHits = new Map();
+    D.classes.forEach(c => c.clusters.forEach(cl => cl.proteins.forEach(p =>
+      p.tiles.forEach(t => {
+        if (t.dk === "undetected" || t.dk === "multiple domains") return;
+        if ((t.l||t.dk).toLowerCase().includes(q) && !ecodHits.has(t.dk))
+          ecodHits.set(t.dk, t);
+      })
+    )));
+    if (ecodHits.size) sections.push({
+      label: "ECOD Domains",
+      items: [...ecodHits.values()].slice(0,4).map(t => ({
+        title: `<span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:${t.c};flex-shrink:0"></span>${esc(t.l)}`,
+        sub: t.dk,
+        action: `jumpToEcod('${esc(t.dk)}')`
+      }))
+    });
+
+    // 5. Proteins — search across many fields
+    const PROT_FIELDS = [
+      [p => p.id,                  "ID"],
+      [p => p.gm.Phage,            "Phage"],
+      [p => p.gm.Genome_name,      "Genome"],
+      [p => p.gm.Genome_ID,        "Genome ID"],
+      [p => p.gm.Genus,            "Genus"],
+      [p => p.gm.Capsule,          "Capsule"],
+      [p => p.gm.Phage_cluster,    "Phage cluster"],
+      [p => p.gm.Observation,      "Observation"],
+      [p => p.morph,               "Morphology"],
+      [p => p.hr,                  "Host range"],
+      [p => p.clid,                "Cluster"],
+      [p => p.pm.PFAM_function,    "PFAM"],
+      [p => p.pm.ECOD_function,    "ECOD"],
+      [p => p.pm["TF-class"],      "TF class"],
+    ];
+    const protHits = [];
+    outer: for (const [, p] of proteinMap) {
+      for (const [fn, label] of PROT_FIELDS) {
+        const val = fn(p);
+        if (val && String(val).toLowerCase().includes(q)) {
+          protHits.push({ p, label });
+          if (protHits.length >= 40) break outer;
+          break;
+        }
+      }
+    }
+    if (protHits.length) sections.push({
+      label: "Proteins",
+      items: protHits.slice(0,20).map(({p, label}) => ({
+        title: `<span style="font-family:monospace">${esc(p.id)}</span>`,
+        sub: esc(classOfProtein(p.id)) + " · " + label,
+        action: `jumpToProtein('${esc(p.id)}')`
+      }))
+    });
+
+    if (!sections.length) { res.style.display = "none"; return; }
+
+    let html = "";
+    sections.forEach(sec => {
+      html += `<div class="sr-section">${sec.label}</div>`;
+      sec.items.forEach(item => {
+        html += `<div class="sr-item" onclick="${item.action};clearSearch()">
+          <div class="sr-pid">${item.title}</div>
+          <div class="sr-cls">${item.sub}</div>
+        </div>`;
+      });
+    });
+    res.innerHTML = html;
+    res.style.display = "block";
   });
-  document.addEventListener("click",e=>{if(!e.target.closest(".top-search"))res.style.display="none";});
+
+  document.addEventListener("click", e => {
+    if (!e.target.closest(".top-search")) res.style.display = "none";
+  });
 }
+
 function clearSearch(){document.getElementById("search-input").value="";document.getElementById("search-results").style.display="none";}
 function classOfProtein(id){for(const c of D.classes)for(const cl of c.clusters)if(cl.proteins.some(p=>p.id===id))return c.name;return"";}
 function jumpToClass(n){showView("classes");setTimeout(()=>{toggleGrp(`cls-${n}`);document.getElementById(`gb-cls-${n}`)?.scrollIntoView({behavior:"smooth",block:"start"});},80);}
 function jumpToProtein(id){showView("rbp");setTimeout(()=>{openDetail(id,"basic");document.getElementById(`pr-${id}`)?.scrollIntoView({behavior:"smooth",block:"center"});},120);}
+function jumpToCluster(id){showView("clusters");setTimeout(()=>{toggleGrp(`cl-${id}`);document.getElementById(`gb-cl-${id}`)?.scrollIntoView({behavior:"smooth",block:"start"});},80);}
+function jumpToPd(id){showView("pd");setTimeout(()=>{toggleGrp(`pdgrp-${id}`);document.getElementById(`gb-pdgrp-${id}`)?.scrollIntoView({behavior:"smooth",block:"start"});},80);}
+function jumpToEcod(dk){showView("ecod");setTimeout(()=>{toggleGrp(`ecod-${dk}`);document.getElementById(`gb-ecod-${dk}`)?.scrollIntoView({behavior:"smooth",block:"start"});},80);}
+
+// ── Modularity network ────────────────────────────────────────────────────────
+function buildModularityView() {
+  // Legend
+  const legEl = document.getElementById("net-legend");
+  legEl.innerHTML = Object.entries(CAT_COLORS).map(([cat, col]) =>
+    `<span class="cat-chip"><span class="cat-swatch" style="background:${col}"></span>${esc(cat)}</span>`
+  ).join("");
+
+  const container = document.getElementById("cy-container");
+  container.innerHTML = "";
+  document.getElementById("net-table-panel").style.display = "none";
+
+  if (typeof cytoscape === "undefined") {
+    container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#aaa;font-size:13px">Cytoscape.js not loaded – serve via HTTP</div>';
+    return;
+  }
+  if (S.cy) { S.cy.destroy(); S.cy = null; }
+
+  const maxN    = Math.max(1, ...SM.nodes.map(n => n.n));
+  const maxEdge = Math.max(1, ...SM.edges.map(e => e.n));
+  const elements = [];
+
+  SM.nodes.forEach(n => {
+    const size = 22 + Math.sqrt(n.n / maxN) * 44;
+    elements.push({ data: { id: n.id, label: n.id, n: n.n, size } });
+  });
+
+  SM.edges.forEach((e, i) => {
+    const width = 1.5 + (e.n / maxEdge) * 6;
+    elements.push({ data: {
+      id: `e${i}`, source: e.s, target: e.t,
+      category: e.cat, count: e.n,
+      color: CAT_COLORS[e.cat] || "#aaa", width
+    }});
+  });
+
+  const cy = cytoscape({
+    container,
+    elements,
+    style: [
+      { selector: "node", style: {
+          "background-color": "#4a90d9",
+          "label": "data(label)",
+          "width": "data(size)", "height": "data(size)",
+          "font-size": 9, "color": "#1a2b3c",
+          "text-valign": "bottom", "text-halign": "center",
+          "text-margin-y": 4, "text-wrap": "wrap", "text-max-width": 90,
+          "border-width": 2, "border-color": "#2d5a8e",
+          "min-zoomed-font-size": 6
+      }},
+      { selector: "edge", style: {
+          "line-color": "data(color)", "width": "data(width)",
+          "opacity": 0.55, "curve-style": "bezier",
+          "loop-sweep": 100, "loop-direction": 45
+      }},
+      { selector: "node.highlighted", style: {
+          "background-color": "#ffc107", "border-color": "#e65100",
+          "border-width": 3, "z-index": 10
+      }},
+      { selector: "node.dimmed",  style: { "opacity": 0.15 }},
+      { selector: "edge.highlighted", style: { "opacity": 0.9, "z-index": 10 }},
+      { selector: "edge.dimmed",  style: { "opacity": 0.04 }}
+    ],
+    layout: {
+      name: "cose", animate: false, randomize: true,
+      nodeRepulsion: 8000, idealEdgeLength: 110, gravity: 0.6
+    }
+  });
+
+  cy.on("tap", "node", function(evt) {
+    const node = evt.target;
+    const nid  = node.id();
+    cy.elements().removeClass("highlighted dimmed");
+    const hood = node.closedNeighborhood();
+    hood.addClass("highlighted");
+    cy.elements().not(hood).addClass("dimmed");
+    S.netFilter = { type: "node", id: nid };
+    showNetworkTable(nid);
+  });
+
+  cy.on("tap", "edge", function(evt) {
+    const edge = evt.target;
+    const src  = edge.data("source");
+    const tgt  = edge.data("target");
+    const cat  = edge.data("category");
+    cy.elements().removeClass("highlighted dimmed");
+    const sel = edge.union(edge.source()).union(edge.target());
+    sel.addClass("highlighted");
+    cy.elements().not(sel).addClass("dimmed");
+    S.netFilter = { type: "edge", src, tgt, cat };
+    showEdgeTable(src, tgt, cat);
+  });
+
+  cy.on("tap", function(evt) {
+    if (evt.target === cy) {
+      cy.elements().removeClass("highlighted dimmed");
+      S.netFilter = null;
+      document.getElementById("net-table-panel").style.display = "none";
+    }
+  });
+
+  S.cy = cy;
+}
+
+// shared table renderer — shows protein-level rows
+function renderSmTable(rows, title) {
+  const hdr = `<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap">
+    <strong style="font-size:12px;color:#1a2b3c">${esc(title)}</strong>
+    <span style="font-size:11px;color:#888">${rows.length} protein pair${rows.length!==1?"s":""}</span>
+    <button class="hdr-btn" onclick="exportNetRowsTSV()" style="margin-left:auto">&#8659; Export TSV</button>
+    <button class="hdr-btn" onclick="resetNet()">&#10005;</button>
+  </div>`;
+
+  const cols = `<thead><tr>
+    <th>Query</th><th>Target</th><th>Category</th>
+    <th title="% identity">%id</th><th title="Alignment length">Aln</th>
+    <th>Q region</th><th>T region</th>
+    <th title="Query coverage">qcov</th><th title="Target coverage">tcov</th>
+    <th>E-value</th>
+  </tr></thead>`;
+
+  let body = "<tbody>";
+  rows.forEach(r => {
+    const dot = `<span style="width:8px;height:8px;border-radius:50%;flex-shrink:0;display:inline-block;background:${CAT_COLORS[r.cat]||"#aaa"}"></span>`;
+    const ev  = r.ev === 0 ? "0" : r.ev.toExponential(1);
+    body += `<tr>
+      <td style="font-family:monospace;font-size:10px">${esc(r.q)}</td>
+      <td style="font-family:monospace;font-size:10px">${esc(r.t)}</td>
+      <td><span style="display:inline-flex;align-items:center;gap:4px">${dot}${esc(r.cat)}</span></td>
+      <td>${r.pid}</td><td>${r.al}</td>
+      <td style="white-space:nowrap">${r.qs}–${r.qe}</td>
+      <td style="white-space:nowrap">${r.ts}–${r.te}</td>
+      <td>${(r.qcov*100).toFixed(0)}%</td>
+      <td>${(r.tcov*100).toFixed(0)}%</td>
+      <td style="font-family:monospace;font-size:10px">${ev}</td>
+    </tr>`;
+  });
+  body += "</tbody>";
+
+  const panel = document.getElementById("net-table-panel");
+  panel.innerHTML = hdr + `<table class="net-table">${cols}${body}</table>`;
+  panel.style.display = "block";
+}
+
+function showNetworkTable(nodeId) {
+  const rows = SM_ROWS.filter(r => r.qc === nodeId || r.tc === nodeId);
+  rows.sort((a, b) => a.cat.localeCompare(b.cat) || b.pid - a.pid);
+  renderSmTable(rows, nodeId);
+}
+
+function showEdgeTable(src, tgt, cat) {
+  const rows = SM_ROWS.filter(r =>
+    r.cat === cat &&
+    ((r.qc === src && r.tc === tgt) || (r.qc === tgt && r.tc === src))
+  );
+  rows.sort((a, b) => b.pid - a.pid);
+  const isSelf  = src === tgt;
+  const partner = isSelf ? `${esc(src)} (self)` : `${esc(src)} ↔ ${esc(tgt)}`;
+  renderSmTable(rows, `${partner} · ${esc(cat)}`);
+}
+
+function resetNet() {
+  if (S.cy) S.cy.elements().removeClass("highlighted dimmed");
+  S.netFilter = null;
+  document.getElementById("net-table-panel").style.display = "none";
+}
+
+function exportNetRowsTSV() {
+  const f = S.netFilter;
+  let rows;
+  if (!f) {
+    rows = SM_ROWS;
+  } else if (f.type === "node") {
+    rows = SM_ROWS.filter(r => r.qc === f.id || r.tc === f.id);
+  } else {
+    rows = SM_ROWS.filter(r =>
+      r.cat === f.cat &&
+      ((r.qc === f.src && r.tc === f.tgt) || (r.qc === f.tgt && r.tc === f.src))
+    );
+  }
+  const lines = ["query\ttarget\tquery_class\ttarget_class\tcategory\tpident\taln_len\tqstart\tqend\ttstart\ttend\tqcov\ttcov\tevalue"];
+  rows.forEach(r => lines.push(
+    `${r.q}\t${r.t}\t${r.qc}\t${r.tc}\t${r.cat}\t${r.pid}\t${r.al}\t${r.qs}\t${r.qe}\t${r.ts}\t${r.te}\t${r.qcov}\t${r.tcov}\t${r.ev}`
+  ));
+  const blob = new Blob([lines.join("\n")], { type: "text/tab-separated-values" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  const tag = !f ? "all" : f.type === "node" ? f.id : `${f.src}-${f.tgt}`;
+  a.download = `rbp-modularity-${tag}-${new Date().toISOString().slice(0,10)}.tsv`;
+  a.click(); URL.revokeObjectURL(a.href);
+}
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function makeTable(obj,labels){
@@ -1226,6 +1580,11 @@ function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").
 """
 
 # ── 11. Inject + write ─────────────────────────────────────────────────────────
-html_out = HTML.replace("__ATLAS_DATA__", data_json).replace("__PD_DATA__", pd_json)
+html_out = (HTML
+    .replace("__ATLAS_DATA__", data_json)
+    .replace("__PD_DATA__",    pd_json)
+    .replace("__SM_DATA__",    sm_json)
+    .replace("__SM_ROWS__",    sm_rows_json)
+)
 OUT.write_text(html_out, encoding="utf-8")
 print(f"Written: {OUT}  ({OUT.stat().st_size//1024} KB)")

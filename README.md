@@ -1,50 +1,84 @@
 # Klebsiella phage RBP Atlas
 
-An interactive browser-based atlas for exploring the structural and functional diversity of **receptor-binding proteins (RBPs)** from *Klebsiella* bacteriophages. The atlas integrates predicted protein structures, ECOD domain annotations, and phage genome metadata into a single interactive visualization.
+An interactive browser-based atlas for exploring the structural and functional diversity of **receptor-binding proteins (RBPs)** from *Klebsiella* bacteriophages. The atlas integrates predicted protein structures, ECOD domain annotations, pseudo-domain classifications, and sequence modularity evidence into a unified interactive visualization.
 
 ---
 
 ## Overview
 
-RBPs are the host-recognition modules of bacteriophages, determining which bacterial capsule serotypes a phage can infect. This atlas presents **382 RBPs** from *Klebsiella* phages, classified into **39 structural classes** and **141 clusters**, with domain architecture visualized using ECOD (Evolutionary Classification of Protein Domains) annotations and 3D structures rendered interactively in the browser.
+RBPs are the host-recognition modules of bacteriophages, determining which bacterial capsule serotypes a phage can infect. This atlas presents **382 RBPs** from *Klebsiella* phages, classified into **39 structural classes** and organized into sequence and structural clusters. It covers:
+
+- Domain architecture annotation via ECOD (Evolutionary Classification of Protein Domains)
+- 3D structure rendering with domain-matched coloring
+- **100 pseudo-domain clusters** mapping structurally conserved regions across RBP classes
+- Sequence modularity evidence across **24 RBP classes** from **2,489 protein-pair alignments**
 
 ---
 
 ## Features
 
-- **Class-based navigation** — Browse RBPs grouped by structural class, with clusters as sub-groups within each class
-- **Domain architecture visualization** — Linear domain bar diagrams colored by ECOD domain type, proportional to protein length
-- **Interactive 3D structure viewer** — NGL-powered in-browser viewer with domain-matched coloring, spin, reset, and surface overlay controls
-- **Host range & morphology filters** — Filter proteins by host range (Narrow / Intermediate–Broad / Unknown) and phage morphology
-- **Protein & genome metadata** — Functional annotations (Pfam, ECOD, PHROGS), prediction scores, phage taxonomy, genome size, capsule type, and PubMed links
-- **Search** — Find proteins by ID, genome name, or phage name; search RBP class names directly
-- **Home navigation** — Click the title to return to the summary statistics page at any time
+### Six explorer views
+
+| View | Description |
+|---|---|
+| **RBPs** | All 382 proteins grouped by phage morphology |
+| **RBP Classes** | Proteins grouped by structural class (39 classes) |
+| **RBP Clusters** | Proteins grouped by sequence cluster |
+| **ECOD Domains** | Three-level hierarchy: domain type → class → proteins, with domain bar rows |
+| **Pseudo-domain Clusters** | 100 structural pseudo-domain clusters mapped onto RBP structures with TM-score badges |
+| **Sequence Modularity** | Interactive Cytoscape.js network: nodes = RBP classes (size ∝ membership), edges = modularity evidence colored by category |
+
+### Detail panel
+- **Interactive 3D structure** — NGL-powered viewer with B-factor, ECOD, or pseudo-domain coloring; spin, reset, surface overlay, and fullscreen mode
+- **Sequence coverage strip** — Canvas-drawn strip with hover-to-highlight: hovering over a residue position highlights the corresponding atom in the 3D viewer
+- **Domain architecture** — Large domain bar with legend (ECOD view)
+- **Pseudo-domain region** — Proportional region bar with TM-score metadata (PD view)
+- **Protein & genome metadata** — Functional annotations (Pfam, ECOD, PHROGS), prediction scores, phage taxonomy, genome size, capsule type, host range, and PubMed links
+- **Download** — `.pdb.gz` structure file download button
+
+### Sequence modularity network
+- Nodes sized proportional to class membership
+- Edges colored by modularity category:
+  - **Cterminal variation** — blue (`#1f77b4`)
+  - **Nterminal sharing** — orange (`#ff7f0e`)
+  - **Putative recombination hotspots** — green (`#2ca02c`)
+  - **Cterminal sharing** — red (`#d62728`)
+  - **Conserved regions** — purple (`#9467bd`)
+- Click a **node** → highlight neighborhood, show protein-pair interaction table for that class
+- Click an **edge** → highlight that class-pair connection, show protein pairs for that specific category
+- Export TSV: all interactions, per-node, or per-edge
+
+### Other
+- **TSV export** — Download the current view's data as a tab-separated file
+- **Universal search** — Searches across protein ID, phage name, genome name, genus, capsule type (KL1/KL2/…), phage cluster, morphology, host range, RBP class, RBP cluster, pseudo-domain cluster, and ECOD domain; results grouped by category with direct navigation
+- **Resizable detail panel** — Drag the left edge to resize; panel supports vertical resize of the NGL viewport
+- **Home donut chart** — ECOD domain coverage across all structured proteins
 
 ---
 
-## Data
+## Data files
 
 | File | Description |
 |---|---|
 | `rbp_table_v16122025.tsv` | RBP metadata: functional predictions, model quality, cluster/class assignments |
-| `ecod-map.tsv` | ECOD domain hits mapped to each RBP (query = RBP, target = ECOD domain) |
+| `ecod-map.tsv` | ECOD domain hits mapped to each RBP |
 | `genome_table_v25122025.tsv` | Phage genome metadata: taxonomy, morphology, host range, capsule, publications |
 | `ecod-color-map.txt` | Color assignments for each ECOD domain type |
+| `pseudo-domain-map.tsv` | Pseudo-domain cluster mappings: PD cluster → target protein, residue range, TM-scores |
+| `sequence_modularity.tsv` | Pairwise protein alignments with modularity category annotations |
 | `structures/` | AlphaFold3-predicted structures in gzip-compressed PDB format (`.pdb.gz`) |
 
 ### RBP filtering criteria
-Proteins included in the atlas meet all of the following:
-- Non-empty `RBP-class` annotation
-- `RBP-class` is not `likely false positive`
 
-This yields **382 proteins** from the full dataset.
+Proteins are included if they have a non-empty `RBP-class` that is not `likely false positive`, yielding **382 proteins**.
 
 ### Domain overlap resolution
-When multiple ECOD hits overlap on the same protein, the following logic is applied:
-1. Hits are grouped into non-overlapping components based on coordinate overlap
-2. Non-overlapping hits are retained as-is
-3. For overlapping hits within a component, up to 3 hits are kept, prioritised by target coverage (`tCov`) and e-value
-4. Protein segments covered by multiple domains are labelled `multiple domains`
+
+When ECOD hits overlap on the same protein:
+1. Hits are grouped into non-overlapping components by coordinate overlap
+2. Non-overlapping hits are kept as-is
+3. For overlapping components, up to 3 hits are retained, ranked by target coverage (`tCov`) then e-value
+4. Segments covered by multiple domains are labelled `multiple domains`
 5. Uncovered segments are labelled `undetected`
 
 ---
@@ -52,83 +86,65 @@ When multiple ECOD hits overlap on the same protein, the following logic is appl
 ## Usage
 
 ### Requirements
-- Python 3 (standard library only — no extra packages needed to serve)
+
+- Python 3 with **pandas** (`pip install pandas` or via conda)
 - A modern web browser (Chrome, Firefox, Safari)
+
+> The build script reads all TSV files and injects the processed data as JSON directly into `index.html`, so the final output is a fully self-contained single-page app — no server-side code needed at runtime.
 
 ### Running locally
 
 ```bash
-# Clone the repository
-git clone https://github.com/VyshakhRP/klebsiella-phage-rbp-atlas.git
-cd klebsiella-phage-rbp-atlas
+git clone https://github.com/VyshakhRP/klebsiella-rbp-atlas.git
+cd klebsiella-rbp-atlas
 
-# Start a local HTTP server
-python3 -m http.server 8765
-
-# Open in browser
-# http://localhost:8765
+# Start a local HTTP server (required for NGL to load .pdb.gz files)
+python3 -m http.server 8080
+# Open http://localhost:8080
 ```
 
-> **Why a local server?** Browsers block direct filesystem access for security. The server makes the compressed PDB files accessible to the NGL structure viewer.
-
-### Rebuilding the webpage
-
-If you update any of the TSV files or the color map, regenerate `index.html` with:
+### Rebuilding after data changes
 
 ```bash
-pip install pandas
+# With a standard Python environment that has pandas:
 python3 build.py
+
+# If using the foldseek conda environment:
+conda run -n foldseek python3 build.py
 ```
 
-Then refresh your browser.
+Rebuilding regenerates `index.html` (~1.2 MB) from all TSV sources. Refresh your browser after rebuilding.
 
 ---
 
-## Navigating the Atlas
+## Navigation quick reference
 
 | Action | Result |
 |---|---|
-| Click an RBP class in the sidebar | Opens the class view showing all proteins grouped by cluster |
-| Click the title (top-left) | Returns to the home summary page |
-| Hover over a domain segment | Tooltip shows domain name and residue range |
-| Click a protein row | Opens the detail panel with domain bar, 3D structure, and metadata |
-| Filter buttons (top of class view) | Filter by host range or phage morphology |
-| Search box | Search by protein ID, genome name, phage name, or class name |
-| Spin / Reset / Surface buttons | 3D structure controls in the detail panel |
-| Protein / Genome tabs | Switch between protein annotation and phage genome metadata |
+| Click an icon card on the home page | Opens the corresponding explorer view |
+| Click the atlas title (top-left) | Returns to the home page |
+| Click a protein row | Opens the detail panel with structure, sequence strip, and metadata |
+| Hover over the sequence strip | Highlights the hovered residue in the 3D viewer |
+| Drag the detail panel's left edge | Resizes the detail panel width |
+| Drag the NGL viewport's bottom edge | Resizes the 3D viewer height |
+| Click ⛶ (fullscreen) | Opens NGL in a full-screen overlay |
+| Click ↙ .pdb.gz | Downloads the structure file |
+| Click ↙ Export TSV | Downloads the current view as TSV |
+| Click a node in the modularity network | Highlights its connections and shows protein-pair table |
+| Click an edge in the modularity network | Shows protein pairs for that class-pair + category |
+| Search box | Searches proteins (by ID, phage, capsule, genus, …), classes, clusters, PD clusters, ECOD domains |
 
 ---
 
-## Domain Color Scheme
+## Libraries
 
-Each ECOD domain is assigned a distinct color for consistent visualization across both the 2D domain bar and the 3D structure:
+| Library | Version | Purpose |
+|---|---|---|
+| [NGL](https://github.com/nglviewer/ngl) | 0.10.4 | 3D protein structure rendering |
+| [Chart.js](https://www.chartjs.org/) | 4.4.3 | Donut charts on home page |
+| [Cytoscape.js](https://cytoscape.org/) | 3.28.1 | Sequence modularity network |
 
-| Domain | Color |
-|---|---|
-| Pectin lyase-like | Yellow |
-| Galactose-binding domain-like | Magenta |
-| Phage tail fiber protein trimerization domain | Orange |
-| SGNH hydrolase | Deep blue |
-| Intramolecular chaperone domain in virus tail spike | Teal |
-| Ig-like domain in tailspike protein | Medium purple |
-| Immunoglobulin/Fibronectin type III | Light purple |
-| Concanavalin A-like lectins/glucanases | Coral pink |
-| TNF-like | Dark red |
-| 7-bladed beta-propeller | Beige |
-| 6-bladed beta-propeller | Bisque |
-| Domain in virus attachment proteins | Cyan |
-| gp11/gp12 receptor-binding domain | Sky blue |
-| Phage T4 gp12 N-terminal repeating units | Brown |
-| Agglutinin HPA-like | Olive brown |
-| gp9 C-terminal domain-related | Dark gray |
-| Undetected | White |
-| Multiple domains | Black |
-
----
-
-## Structure Files
-
-3D structures are AlphaFold3 predictions stored as gzip-compressed PDB files (`structures/*.pdb.gz`). The NGL viewer loads and decompresses these files on demand in the browser — no pre-processing required.
+All libraries are loaded from CDN; no local installation required.
 
 ---
 
@@ -136,11 +152,10 @@ Each ECOD domain is assigned a distinct color for consistent visualization acros
 
 If you use this atlas in your research, please cite:
 
-> Rajachandra Panicker V, et al. *A structural atlas of Klebsiella phage receptor-binding proteins reveals multi-scale modularity underlies host-range diversification.* (manuscript submitted)
+> Rajachandra Panicker V, et al. *A structural atlas of Klebsiella phage receptor-binding proteins reveals multi-scale modularity underlies host-range diversification.* (manuscript in preparation)
 
 ---
 
 ## Contact
 
-Vyshakh Rajachandra Panicker (vyshakh.rajachandrapanicker@doctoral.uj.edu.pl) 
-
+Vyshakh Rajachandra Panicker — vyshakh.rajachandrapanicker@doctoral.uj.edu.pl
