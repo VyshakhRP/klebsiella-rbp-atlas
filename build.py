@@ -15,9 +15,9 @@ except ImportError:
     sys.exit("pandas required:  pip install pandas")
 
 HERE         = Path(__file__).parent
-RBP_TABLE    = HERE / "rbp_table_v16122025.tsv"
+RBP_TABLE    = HERE / "rbp_table.tsv"
 ECOD_MAP     = HERE / "ecod-map.tsv"
-GENOME_TABLE = HERE / "genome_table_v25122025.tsv"
+GENOME_TABLE = HERE / "genome_table.tsv"
 COLOR_FILE   = HERE / "ecod-color-map.txt"
 PD_MAP       = HERE / "pseudo-domain-map.tsv"
 SM_MAP       = HERE / "sequence_modularity.tsv"
