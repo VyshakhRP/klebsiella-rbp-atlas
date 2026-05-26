@@ -1,0 +1,23 @@
+    ecod_color_mapping = {
+        'undetected': (1.00, 1.00, 1.00),  # white
+        'multiple domains': (0.00, 0.00, 0.00),  # black
+        "2007.5.1:SGNH hydrolase": (0.00, 0.28, 0.67),  # deep blue
+        "79.1.1:Phage tail fiber protein trimerization domain": (0.90, 0.55, 0.00),  # orange
+        "3240.1.1:Intramolecular chaperone domain in virus tail spike protein": (0.00, 0.60, 0.55),  # teal
+        "10.1.2:Galactose-binding domain-like": (0.80, 0.00, 0.60),  # magenta
+        '11.21.1:Ig-like domain in tailspike protein': (0.60, 0.40, 0.80),  # medium purple
+        '11.1.1:Immunoglobulin/Fibronectin type III/E set domains/PapD-like': (0.75, 0.55, 0.90),  # lighter purple
+        '10.1.1:Concanavalin A-like lectins/glucanases': (0.95, 0.30, 0.50),  # coral pink
+        '10.3.1:TNF-like': (0.70, 0.00, 0.30),  # dark red
+        '10.2.1:Nucleoplasmin-like/VP (viral coat and capsid proteins)': (1.00, 0.50, 0.70),  # light pink
+        '3856.1.2:tailspike protein Orf211 N-terminal domain': (0.20, 0.70, 0.30),  # medium green
+        '3856.1.1:Putative tailspike protein Orf210 N-terminal domain': (0.50, 0.90, 0.50),  # light green
+        '207.2.1:Pectin lyase-like': (0.85, 0.85, 0.00),  # yellow
+        '1083.1.1:Phage T4 gp12 N-terminal repeating units': (0.40, 0.20, 0.10),  # brown
+        '877.1.1:gp11/gp12 receptor-binding domain': (0.00, 0.45, 0.70),  # sky blue
+        '5.1.4:7-bladed': (0.96, 0.96, 0.86),  # beige
+        '3386.1.1:gp9 C-terminal domain-related': (0.30, 0.30, 0.30),  # dark gray
+        '5.1.3:6-bladed': (1.00, 0.89, 0.77),  # bisque
+        '5092.1.1:Domain in virus attachment proteins': (0.00, 0.70, 0.90),  # cyan
+        '4182.1.1:Agglutinin HPA-like': (0.55, 0.35, 0.00),  # olive brown
+    }
