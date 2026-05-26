@@ -11,7 +11,7 @@ RBPs are the host-recognition modules of bacteriophages, determining which bacte
 - Domain architecture annotation via ECOD (Evolutionary Classification of Protein Domains)
 - 3D structure rendering with domain-matched coloring
 - **100 pseudo-domain clusters** mapping structurally conserved regions across RBP classes
-- Sequence modularity evidence across **24 RBP classes** from **2,489 protein-pair alignments**
+- Sequence modularity evidence across **25 RBP classes** from **1,472 protein-pair alignments**
 
 ---
 
@@ -60,9 +60,9 @@ RBPs are the host-recognition modules of bacteriophages, determining which bacte
 
 | File | Description |
 |---|---|
-| `rbp_table_v16122025.tsv` | RBP metadata: functional predictions, model quality, cluster/class assignments |
+| `rbp_table.tsv` | RBP metadata: functional predictions, model quality, cluster/class assignments |
 | `ecod-map.tsv` | ECOD domain hits mapped to each RBP |
-| `genome_table_v25122025.tsv` | Phage genome metadata: taxonomy, morphology, host range, capsule, publications |
+| `genome_table.tsv` | Phage genome metadata: taxonomy, morphology, host range, capsule, publications |
 | `ecod-color-map.txt` | Color assignments for each ECOD domain type |
 | `pseudo-domain-map.tsv` | Pseudo-domain cluster mappings: PD cluster → target protein, residue range, TM-scores |
 | `sequence_modularity.tsv` | Pairwise protein alignments with modularity category annotations |
@@ -113,7 +113,7 @@ python3 build.py
 conda run -n foldseek python3 build.py
 ```
 
-Rebuilding regenerates `index.html` (~1.2 MB) from all TSV sources. Refresh your browser after rebuilding.
+Rebuilding regenerates `index.html` (~950 KB) from all TSV sources. Refresh your browser after rebuilding.
 
 ---
 
